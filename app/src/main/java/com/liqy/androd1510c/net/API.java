@@ -16,5 +16,5 @@ import retrofit2.http.Query;
 public interface API {
 
     @GET("avatars_subjects")
-    Observable<HttpResult<List<Goods>>> avatarsSubjects(@Query("pdduid") String uid);
+    Observable<HttpResult<List<Goods>>> avatarsSubjects();
 }

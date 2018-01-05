@@ -1,6 +1,13 @@
 package com.liqy.androd1510c.net;
 
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,9 +30,11 @@ public class RetrofitHelper {
         if (retrofit == null) {
             synchronized (RetrofitHelper.class) {
                 if (retrofit == null) {
-
-                    OkHttpClient client=new OkHttpClient.Builder()
-//                            .addInterceptor() 应用拦截器
+                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .addInterceptor(new MyInterceptor())
+                            .addInterceptor(logging)
 //                            .addNetworkInterceptor() 网路拦截器
                             .build();
 
@@ -43,6 +52,7 @@ public class RetrofitHelper {
         return retrofit;
     }
 
+
     public static API getAPI() {
         if (api == null) {
             synchronized (RetrofitHelper.class) {
@@ -54,5 +64,21 @@ public class RetrofitHelper {
         return api;
     }
 
+   static class MyInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            HttpUrl httpUrl = request
+                    .url()
+                    .newBuilder()
+                    .addQueryParameter("pdduid", "3470667255")
+                    .build();
+            Request requestNew = request
+                    .newBuilder()
+                    .url(httpUrl)
+                    .build();
+            return chain.proceed(requestNew);
+        }
+    }
 
 }

@@ -30,7 +30,7 @@ public class GoodsPresenter {
      * 获取数据，RxJava
      */
     public void getData() {
-        RetrofitHelper.getAPI().avatarsSubjects("3470667255")
+        RetrofitHelper.getAPI().avatarsSubjects()
 
                 .map(new Function<HttpResult<List<Goods>>, List<Goods>>() {
                     @Override
