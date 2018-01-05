@@ -1,0 +1,108 @@
+总结
+
+两个接口
+
+动态URL：
+
+结果1:a
+结果2:b
+
+两个接口结果合并{
+	1.a+b连接：
+	2.a+b组合：
+}
+
+两个接口：第一个接口是第二个接口的前置条件
+{
+	1.a作为请求b的参数
+}
+
+上面两种情况结合：
+最后都要合并成一个界面最终结果
+
+
+导航栏{
+	底部导航栏
+	https://github.com/Brioal/BottomTabLayout
+	https://github.com/adib2149/BottomNavBar
+	https://github.com/f22labs/InstaLikeFragmentTransaction
+	https://github.com/NoCodeNoWife/LLRiseTabBar-Android
+	https://github.com/LittleFriendsGroup/BottomNavigation
+
+	头部导航栏
+	https://github.com/xiaohaibin/CustomTitleBar
+	https://github.com/bacy/titlebar
+
+
+}
+
+RecyclerView{
+	上拉加载
+	下拉刷新
+	多条目加载
+	分割线
+	动画
+
+	https://github.com/rubensousa/RecyclerViewSnap
+	https://github.com/CameloeAnthony/Learning-RecyclerView
+	https://github.com/yarolegovich/DiscreteScrollView
+	https://github.com/lcodecorex/TwinklingRefreshLayout
+	https://github.com/liaoinstan/SpringView
+	https://github.com/TakuSemba/MultiSnapRecyclerView
+	https://github.com/vivian8725118/TimeLine
+}
+
+CoordinatorLayout+Beahavior {
+	https://github.com/gm365066360/FlingBehavior
+	https://github.com/hugeterry/CoordinatorTabLayout
+	https://github.com/dkzwm/SmoothRefreshLayout
+
+	https://github.com/JmStefanAndroid/EasyBehavior
+
+}
+
+ViewPager + Indicator{
+	横向滚动菜单
+	https://github.com/rubensousa/ViewPagerCards
+	https://github.com/hackware1993/MagicIndicator
+	https://github.com/DavidPacioianu/InkPageIndicator
+}
+
+Activity{
+	
+}
+
+Fragment{
+	
+}
+
+Dialog{
+	广告对话框
+	普通提示二次确认对话框
+	悬浮框
+}
+
+启动页，闪屏页面 Splash {
+	Uber:https://github.com/KobeGong/UberSplash
+
+	https://github.com/jkyeo/Android-SplashView
+
+	Twitter:https://github.com/ykabaran/TwitterSplash
+
+	网易：https://github.com/heartinfei/netease_splash
+
+}
+
+引导页 Guide{
+	流利说：https://github.com/JeasonWong/LiulishuoPreview
+	赶集：https://github.com/zhaoxin1943/ZXVerticalViewPager
+	应用内页面：https://github.com/binIoter/GuideView
+			   https://github.com/amlcurran/ShowcaseView
+}
+
+
+
+
+
+
+
