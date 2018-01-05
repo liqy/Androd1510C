@@ -37,6 +37,11 @@ public class GoodsPresenter {
                     public List<Goods> apply(HttpResult<List<Goods>> result) throws Exception {
                         if (result!=null){
                             if (result.goods_list!=null){
+
+                                //TODO 数据存储写在哪里？？？
+
+                                //TODO 如何中断网络？？？
+
                                 return result.goods_list;
                             }
                         }

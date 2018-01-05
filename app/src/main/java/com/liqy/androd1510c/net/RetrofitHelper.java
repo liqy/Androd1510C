@@ -21,7 +21,6 @@ public class RetrofitHelper {
     private static Retrofit retrofit;
 
     private static API api;
-
     /**
      * 初始化Retrofit 单例模式
      */
@@ -64,6 +63,9 @@ public class RetrofitHelper {
         return api;
     }
 
+    /**
+     * 添加公共参数拦截器
+     */
    static class MyInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
