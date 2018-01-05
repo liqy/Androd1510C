@@ -33,9 +33,17 @@ public class GoodsPresenter {
                 .subscribe(new Consumer<HttpResult<List<Goods>>>() {
                     @Override
                     public void accept(HttpResult<List<Goods>> result) throws Exception {
-                        goodsView.ok(result);
+                        if (goodsView != null) {// 异步网络，延迟执行
+                            goodsView.ok(result);
+                        }
                     }
                 });
 
+    }
+
+    public void unBindView() {
+        if (goodsView != null) {
+            goodsView = null;
+        }
     }
 }

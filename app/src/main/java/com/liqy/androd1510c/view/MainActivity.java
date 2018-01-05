@@ -38,4 +38,10 @@ public class MainActivity extends BaseActivity implements IGoodsView {
     public void failed(String msg) {
         tv_hello.setText(msg);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unBindView();
+    }
 }
