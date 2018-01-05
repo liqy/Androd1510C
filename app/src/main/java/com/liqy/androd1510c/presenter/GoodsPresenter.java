@@ -12,6 +12,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * ？暂定网络请求
  * Created by liqy on 2018/1/5.
  */
 

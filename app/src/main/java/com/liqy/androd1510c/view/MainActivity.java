@@ -28,7 +28,6 @@ public class MainActivity extends BaseActivity implements IGoodsView {
         presenter.getData();
     }
 
-
     @Override
     public void ok(HttpResult<List<Goods>> result) {
         tv_hello.setText(result.toString());
