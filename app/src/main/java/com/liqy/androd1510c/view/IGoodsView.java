@@ -10,6 +10,6 @@ import java.util.List;
  */
 
 public interface IGoodsView {
-    void ok(HttpResult<List<Goods>> result);
+    void ok(List<Goods> result);
     void failed(String msg);
 }

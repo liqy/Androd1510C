@@ -5,10 +5,12 @@ import com.liqy.androd1510c.model.HttpResult;
 import com.liqy.androd1510c.net.RetrofitHelper;
 import com.liqy.androd1510c.view.IGoodsView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -29,14 +31,24 @@ public class GoodsPresenter {
      */
     public void getData() {
         RetrofitHelper.getAPI().avatarsSubjects("3470667255")
+
+                .map(new Function<HttpResult<List<Goods>>, List<Goods>>() {
+                    @Override
+                    public List<Goods> apply(HttpResult<List<Goods>> result) throws Exception {
+                        if (result!=null){
+                            if (result.goods_list!=null){
+                                return result.goods_list;
+                            }
+                        }
+                        return new ArrayList<>();
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<HttpResult<List<Goods>>>() {
+                .subscribe(new Consumer<List<Goods>>() {
                     @Override
-                    public void accept(HttpResult<List<Goods>> result) throws Exception {
-                        if (goodsView != null) {// 异步网络，延迟执行
-                            goodsView.ok(result);
-                        }
+                    public void accept(List<Goods> goods) throws Exception {
+                        goodsView.ok(goods);
                     }
                 });
 

@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity implements IGoodsView {
     }
 
     @Override
-    public void ok(HttpResult<List<Goods>> result) {
+    public void ok(List<Goods> result) {
         tv_hello.setText(result.toString());
     }
 
