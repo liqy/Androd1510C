@@ -1,7 +1,10 @@
 package com.liqy.androd1510c.net;
 
 import java.io.IOException;
+import java.util.List;
 
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -32,8 +35,9 @@ public class RetrofitHelper {
                     HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                     logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                     OkHttpClient client = new OkHttpClient.Builder()
-                            .addInterceptor(new MyInterceptor())
+//                            .addInterceptor(new MyInterceptor())
                             .addInterceptor(logging)
+
 //                            .addNetworkInterceptor() 网路拦截器
                             .build();
 
@@ -41,6 +45,7 @@ public class RetrofitHelper {
                     retrofit = new Retrofit.Builder()
                             .baseUrl(Urls.BASE_URL)
                             .client(client)
+
                             .addConverterFactory(GsonConverterFactory.create())
                             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .build();

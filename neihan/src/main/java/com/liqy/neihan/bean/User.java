@@ -18,4 +18,13 @@ public class User {
     public boolean is_following;
     public boolean is_pro_user;
     public List<Medal> medals;
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User(long user_id, String name) {
+        this.user_id = user_id;
+        this.name = name;
+    }
 }

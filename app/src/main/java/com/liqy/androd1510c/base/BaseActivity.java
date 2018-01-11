@@ -1,6 +1,12 @@
 package com.liqy.androd1510c.base;
 
+import android.app.IntentService;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.MessageQueue;
 import android.support.v7.app.AppCompatActivity;
+
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -12,7 +18,6 @@ import butterknife.Unbinder;
 public class BaseActivity extends AppCompatActivity {
 
     Unbinder unbinder;
-
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
