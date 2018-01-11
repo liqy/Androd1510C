@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.liqy.androd1510c.R;
 import com.liqy.androd1510c.base.BaseActivity;
 import com.liqy.androd1510c.model.Goods;
 import com.liqy.androd1510c.model.HttpData;
+import com.liqy.androd1510c.model.User;
 import com.liqy.androd1510c.net.RetrofitHelper;
 import com.liqy.androd1510c.presenter.GoodsPresenter;
 import com.zhihu.matisse.Matisse;
@@ -24,8 +26,11 @@ import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -74,33 +79,64 @@ public class MainActivity extends BaseActivity implements IGoodsView {
         presenter.unBindView();
     }
 
+    public void loginUpload(String phone, String pwd, final File file) {
+
+        //TODO token 验证token
+
+        String loginUrl = "https://www.zhaoapi.cn/user/login";
+
+        RetrofitHelper.getAPI().login(loginUrl, phone, pwd)
+                //TODO  flatMap 应用场景？？？
+                .flatMap(new Function<HttpData<User>, ObservableSource<HttpData>>() {
+                    @Override
+                    public ObservableSource<HttpData> apply(HttpData<User> userHttpData) throws Exception {
+
+                        if (userHttpData != null) {
+                            User user = userHttpData.data;
+                            if (user != null) {
+                                //UID
+                                RequestBody uid = RequestBody.create(MediaType.parse("multipart/form-data"), user.uid);
+                                //TOKEN
+                                RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), user.token);
+
+                                RequestBody requestImgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+                                // 创建MultipartBody.Part，用于封装文件数据
+                                MultipartBody.Part requestImgPart =
+                                        MultipartBody.Part.createFormData("file", file.getName(), requestImgFile);
+
+                                String url = "https://www.zhaoapi.cn/file/upload";
+                                return RetrofitHelper.getAPI().upload(url, uid, token, requestImgPart);
+                            }
+                        }
+                        return Observable.empty();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpData>() {
+                    @Override
+                    public void accept(HttpData httpData) throws Exception {
+                        Toast.makeText(MainActivity.this, httpData.msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            //TODO 拿到的图片文件 https://github.com/zhihu/Matisse
+
             List<Uri> uris = Matisse.obtainResult(data);
             Uri uri = uris.get(0);
+            //待上传文件 Uri 转 File
+            //TODO 剪切（crop） 滤镜（filter） 压缩 （字典查一下）
 
-            String url = "https://www.zhaoapi.cn/file/upload";
-
-            RequestBody uid = RequestBody.create(MediaType.parse("multipart/form-data"), "4243");
-            RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), "94A2C256471982A75C170CAB844FE4FE");
             File file = new File(getAbsoluteImagePath(this, uri));
 
-            RequestBody requestImgFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
-            // 创建MultipartBody.Part，用于封装文件数据
-            MultipartBody.Part requestImgPart =
-                    MultipartBody.Part.createFormData("file", file.getName(), requestImgFile);
-
-            RetrofitHelper.getAPI().upload(url, uid, token, requestImgPart)
-                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<HttpData>() {
-                        @Override
-                        public void accept(HttpData httpData) throws Exception {
-
-                        }
-                    });
+            loginUpload("13051151601", "123456", file);
         }
     }
 

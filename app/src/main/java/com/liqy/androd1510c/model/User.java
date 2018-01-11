@@ -25,7 +25,7 @@ public class User {
     public String password;
     public String praiseNum;
     public String token;
-    public int uid;
+    public String uid;
     public String userId;
     public String username;
 
